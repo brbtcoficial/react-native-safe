@@ -1,0 +1,38 @@
+{
+  "name": "B8safeExample",
+  "displayName": "B8safeExample",
+  "components": [
+    {
+      "appKey": "B8safeExample",
+      "displayName": "B8safeExample"
+    }
+  ],
+  "resources": {
+    "android": [
+      "dist/res",
+      "dist/main.android.jsbundle"
+    ],
+    "ios": [
+      "dist/assets",
+      "dist/main.ios.jsbundle"
+    ],
+    "macos": [
+      "dist/assets",
+      "dist/main.macos.jsbundle"
+    ],
+    "visionos": [
+      "dist/assets",
+      "dist/main.visionos.jsbundle"
+    ],
+    "windows": [
+      "dist/assets",
+      "dist/main.windows.bundle"
+    ]
+  },
+  "android": {
+    "package": "b8safe.example"
+  },
+  "ios": {
+    "bundleIdentifier": "b8safe.example"
+  }
+}
