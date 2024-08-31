@@ -24,8 +24,8 @@ Verifique se as dependencias abaixo estão corretamente instaladas e configurada
 Dica: Verifique o passo a passo para a instalação de cada dependência, de acordo com as versões apontadas no arquivo [package.json](https://github.com/brbtcoficial/react-native-b8safe/blob/master/package.json).
 
 ## Basic Usage
-Para começar, você precisará adicionar o Provider do serviço na raiz do seu projeto React, com sua aplicação inteira sendo elemento filho do `B8SafeProvider`:
-O atributo `hashChecker` é obrigatório e pode ser obtido diretamente no seu painel da [B8safe](https://safe.b8.com.br/login). 
+
+Para começar, você precisará adicionar o Provider do serviço na raiz do seu projeto React, com sua aplicação inteira sendo elemento filho do `B8SafeProvider` 
 
 ```js
 import React from 'react';
@@ -42,9 +42,11 @@ const App = () => {
 export default App;
 ```
 
+O atributo `hashChecker` é obrigatório e pode ser obtido diretamente no painel [B8safe](https://safe.b8.com.br/login).
+
 ## Contributing
 
-- See [this Medium post](https://arunkumarvallal.medium.com/- become-a-pro-at-commit-messages-using-commitlint-56dab86333b3) if you dont know to work with commitlint.
+- See [this](https://arunkumarvallal.medium.com/- become-a-pro-at-commit-messages-using-commitlint-56dab86333b3) if you dont know to work with commitlint.
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## To-Do
