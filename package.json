@@ -1,5 +1,5 @@
 {
-  "name": "react-native-b8safe",
+  "name": "@brbtcoficial/react-native-b8safe",
   "version": "0.0.2",
   "description": "Package for native integration of Liveness service by B8Safe",
   "source": "./src/index.tsx",
@@ -40,7 +40,8 @@
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
-    "release": "release-it"
+    "release": "release-it",
+    "commit": "git-cz"
   },
   "keywords": [
     "liveness",
@@ -50,10 +51,7 @@
     "ios",
     "android"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brbtcoficial/react-native-b8safe.git"
-  },
+  "repository": "https://github.com/brbtcoficial/react-native-b8safe.git",
   "author": "B8 Hub <safe@b8.com.br> (https://safe.b8.com.br)",
   "license": "MIT",
   "bugs": {
@@ -61,7 +59,7 @@
   },
   "homepage": "https://github.com/brbtcoficial/react-native-b8safe#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
@@ -73,6 +71,7 @@
     "@types/react-native": "^0.71.5",
     "@types/react-native-webrtc": "^1.75.9",
     "commitlint": "^17.0.2",
+    "cz-conventional-changelog": "^3.3.0",
     "del-cli": "^5.1.0",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -190,5 +189,10 @@
     "type": "module-legacy",
     "languages": "kotlin-objc",
     "version": "0.41.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
