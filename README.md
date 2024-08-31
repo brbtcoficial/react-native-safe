@@ -46,7 +46,7 @@ O atributo `hashChecker` é obrigatório e pode ser obtido diretamente no painel
 
 ## Contributing
 
-- See [this](https://arunkumarvallal.medium.com/- become-a-pro-at-commit-messages-using-commitlint-56dab86333b3) if you dont know to work with commitlint.
+- See [this](https://arunkumarvallal.medium.com/-become-a-pro-at-commit-messages-using-commitlint-56dab86333b3) if you dont know to work with commitlint.
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## To-Do
