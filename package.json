@@ -53,7 +53,7 @@
   ],
   "repository": "https://github.com/brbtcoficial/react-native-b8safe.git",
   "author": "B8 Hub <safe@b8.com.br> (https://safe.b8.com.br)",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/brbtcoficial/react-native-b8safe/issues"
   },
@@ -89,16 +89,16 @@
     "@types/react": "18.2.2"
   },
   "peerDependencies": {
-    "@shopify/react-native-skia": "0.1.241",
-    "react": "18.2.0",
-    "react-native": "0.71.5",
-    "react-native-permissions": "3.6.1",
-    "react-native-reanimated": "3.7.0",
-    "react-native-sha256": "1.4.10",
-    "react-native-svg": "12.5.1",
-    "react-native-vision-camera": "3.9.2",
-    "react-native-webrtc": "118.0.7",
-    "react-native-worklets-core": "0.2.4"
+    "@shopify/react-native-skia": "^0.1.241",
+    "react": "^18.2.0",
+    "react-native": "^0.71.5",
+    "react-native-permissions": "^3.6.1",
+    "react-native-reanimated": "^3.8.1",
+    "react-native-sha256": "^1.4.10",
+    "react-native-svg": "^12.5.1",
+    "react-native-vision-camera": "^3.9.2",
+    "react-native-webrtc": "^118.0.7",
+    "react-native-worklets-core": "^0.2.4"
   },
   "packageManager": "npm@9.8.1",
   "jest": {
