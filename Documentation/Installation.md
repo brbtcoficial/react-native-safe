@@ -17,3 +17,9 @@ Verifique se as dependencias abaixo estão corretamente instaladas e configurada
 ```sh
 npm install @b8safe/react-native-safe
 ```
+
+### iOS Setup
+Depois de instalar a biblioteca, adicione a seguinte linha dentro do target do seu `Podfile`:
+```Pod
+pod '@b8safe/react-native-safe' , :path => '../node_modules/@b8safe/react-native-safe'
+```
