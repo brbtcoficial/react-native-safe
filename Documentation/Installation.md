@@ -15,5 +15,5 @@ Verifique se as dependencias abaixo estão corretamente instaladas e configurada
 #### Install command
 
 ```sh
-npm install react-native-b8safe
+npm install @b8safe/react-native-safe
 ```

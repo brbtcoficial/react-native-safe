@@ -7,7 +7,7 @@ SDK para integração dos serviços da B8Safe em aplicações React-Native.
 ## Installation
 Detalhes sobre a instalação, consulte a [documentação](https://github.com/brbtcoficial/react-native-b8safe/blob/master/Documentation/Installation.md).
 ```sh
-npm install react-native-b8safe
+npm install @b8safe/react-native-safe
 ```
 
 ### Dependencies
