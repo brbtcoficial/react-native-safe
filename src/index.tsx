@@ -8,7 +8,7 @@ import CameraScreen from './screens/CameraScreen';
 import type { FinishCallData } from './screens/types';
 
 // Device integrity token
-export function getIntegrityToken(payload: object): Promise<string | null> {
+export function getIntegrityToken(payload?: object): Promise<string | null> {
   return getToken(payload);
 }
 
