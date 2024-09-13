@@ -3,7 +3,9 @@ import React, {
   useRef,
   useState,
   type MutableRefObject,
+  useEffect,
 } from 'react';
+import { NativeModules } from 'react-native';
 import {
   MediaStream,
   RTCPeerConnection,
@@ -86,6 +88,14 @@ export const B8SafeProvider: React.FC<Configuration> = ({
     }
   };
 
+  const prepareStandardIntegrityTokenProvider = async () => {
+    try {
+      await NativeModules?.PlayIntegrity.prepareStandardIntegrityTokenProvider();
+    } catch (e) {
+      console.error('Erro ao preparar o provider de integridade padrão:', e);
+    }
+  };
+
   const changeStreamResolution = async (
     _params: RTCRtpEncodingParameters & {
       degradationPreference?:
@@ -164,8 +174,8 @@ export const B8SafeProvider: React.FC<Configuration> = ({
     realSdp: string
   ) => {
     var allowed = [];
-    var rtxRegex = new RegExp('a=fmtp:(\\d+)\ apt=(\\d+)\\r$');
-    var codecRegex = new RegExp('a=rtpmap:([0-9]+)\ ' + escapeRegExp(codec));
+    var rtxRegex = new RegExp('a=fmtp:(\\d+) apt=(\\d+)\\r$');
+    var codecRegex = new RegExp('a=rtpmap:([0-9]+) ' + escapeRegExp(codec));
     var videoRegex = new RegExp('(m=' + kind + ' .*?)( ([0-9]+))*\\s*$');
 
     var lines = realSdp.split('\n');
@@ -370,6 +380,10 @@ export const B8SafeProvider: React.FC<Configuration> = ({
   const removeDataChannelFunction = (index: string) => {
     if (functions.current[index]) delete functions.current[index];
   };
+
+  useEffect(() => {
+    prepareStandardIntegrityTokenProvider();
+  }, []);
 
   return (
     <B8SafeServiceContext.Provider

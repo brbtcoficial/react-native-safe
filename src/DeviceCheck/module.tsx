@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import { sha256 } from 'react-native-sha256';
 
 const LINKING_ERROR =
   `The package 'react-native-b8safe' doesn't seem to be linked. Make sure: \n\n` +
@@ -36,9 +37,6 @@ const PlayIntegrity: {
       }
     );
 
-// import PlayIntegrity from '@erickcrus/react-native-play-integrity';
-import { sha256 } from 'react-native-sha256';
-
 function generateRandomString(length: number) {
   const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -64,15 +62,6 @@ export const getToken = async (payload?: object, type = 'standard') => {
             nonce
           );
         } else if (type === 'standard') {
-          try {
-            await PlayIntegrity.prepareStandardIntegrityTokenProvider();
-          } catch (e) {
-            console.error(
-              'Erro ao preparar o provider de integridade padrão:',
-              e
-            );
-          }
-
           try {
             const isPrepared =
               await PlayIntegrity.isStandardIntegrityTokenProviderPrepared();
