@@ -19,7 +19,22 @@ npm install @b8safe/react-native-safe
 ```
 
 ### iOS Setup
-Depois de instalar a biblioteca, adicione a seguinte linha dentro do target do seu `Podfile`:
+
+Depois de instalar a biblioteca, adicione a seguinte linha dentro do target do arquivo `ios/Podfile`:
+
 ```Pod
 pod '@b8safe/react-native-safe' , :path => '../node_modules/@b8safe/react-native-safe'
+```
+
+### Android Setup
+
+Depois de instalar a biblioteca, adicione o código abaixo no arquivo `android/settings.gradle`:
+
+```
+    ...
+
+    include ':@b8safe_react-native-safe'
+    project(':@b8safe_react-native-safe').projectDir = new File(rootProject.projectDir, '../node_modules/@b8safe/react-native-safe/android')
+    
+    ...
 ```

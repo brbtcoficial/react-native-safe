@@ -22,6 +22,9 @@ const DeviceCheck: {
 const PlayIntegrity: {
   isPlayIntegrityAvailable: () => Promise<boolean>;
   requestIntegrityToken: (nonce: string) => Promise<string>;
+  prepareStandardIntegrityTokenProvider: () => Promise<void>;
+  isStandardIntegrityTokenProviderPrepared: () => Promise<boolean>;
+  requestStandardIntegrityToken: (hash: string) => Promise<string>;
 } = NativeModules.PlayIntegrity
   ? NativeModules.PlayIntegrity
   : new Proxy(
@@ -36,22 +39,58 @@ const PlayIntegrity: {
 // import PlayIntegrity from '@erickcrus/react-native-play-integrity';
 import { sha256 } from 'react-native-sha256';
 
-export const getToken = async (payload?: object) => {
+function generateRandomString(length: number) {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+export const getToken = async (payload?: object, type = 'standard') => {
   try {
     if (Platform.OS === 'android') {
-      const nonce = await sha256(JSON.stringify(payload ?? {}));
       const isAvailable = await PlayIntegrity.isPlayIntegrityAvailable();
-      const base64Nonce = new Buffer(nonce).toString('base64');
-      if (isAvailable)
-        return (
-          (await PlayIntegrity.requestIntegrityToken(base64Nonce)) + '|' + nonce
-        );
+      if (isAvailable) {
+        if (type === 'classic') {
+          const nonce = await sha256(JSON.stringify(payload ?? {}));
+          const base64Nonce = new Buffer(nonce).toString('base64');
+          return (
+            (await PlayIntegrity.requestIntegrityToken(base64Nonce)) +
+            '|' +
+            nonce
+          );
+        } else if (type === 'standard') {
+          try {
+            await PlayIntegrity.prepareStandardIntegrityTokenProvider();
+          } catch (e) {
+            console.error(
+              'Erro ao preparar o provider de integridade padrão:',
+              e
+            );
+          }
+
+          try {
+            const isPrepared =
+              await PlayIntegrity.isStandardIntegrityTokenProviderPrepared();
+            if (isPrepared) {
+              const hash = generateRandomString(64);
+              return await PlayIntegrity.requestStandardIntegrityToken(hash);
+            }
+          } catch (e) {
+            console.error('Erro ao obter o token de integridade padrão:', e);
+          }
+        }
+      }
       return null;
     } else {
       return await DeviceCheck.getDeviceToken();
     }
   } catch (e) {
-    console.error('Erro:', e);
+    console.error('Erro ao obter o token de integridade:', e);
     return null;
   }
 };

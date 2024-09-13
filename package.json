@@ -1,6 +1,6 @@
 {
   "name": "@b8safe/react-native-safe",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Package for native integration of Liveness service by B8Safe",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -15,7 +15,8 @@
         "types": "./lib/typescript/commonjs/src/index.d.ts",
         "default": "./lib/commonjs/index.js"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "src",
@@ -92,7 +93,7 @@
   "resolutions": {
     "@types/react": "18.2.2"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@shopify/react-native-skia": "^0.1.241",
     "react": "^18.2.0",
     "react-native": "^0.71.5",

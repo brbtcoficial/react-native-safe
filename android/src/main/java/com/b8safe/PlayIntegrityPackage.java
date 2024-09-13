@@ -1,4 +1,4 @@
-package sk.kedros.playintegrity;
+package br.com.b8.safe;
 
 import java.util.Arrays;
 import java.util.Collections;
