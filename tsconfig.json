@@ -6,7 +6,7 @@
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-native",
     "lib": ["es6", "ES2023"],
@@ -18,7 +18,7 @@
     "strict": true,
     "target": "ESNext",
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
   "exclude": [
     "node_modules",

@@ -45,6 +45,17 @@ export interface Configuration {
   hashChecker: string;
 }
 
+
+/**
+ * Prepare Standard Integrity Token Provider
+ * @method prepareStandardIntegrityTokenProvider
+ * @param  {Number} cloudProjectNumber Cloud project number (optional)
+ * @return {Promise}
+ */
+function prepareSITProvider(cloudProjectNumber?:string): Promise<void> {
+  return NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(cloudProjectNumber);
+}
+
 const DEFAULT_VALUE: Context = {
   pc: null,
   connected: false,
@@ -90,7 +101,7 @@ export const B8SafeProvider: React.FC<Configuration> = ({
 
   const prepareStandardIntegrityTokenProvider = async () => {
     try {
-      await NativeModules?.PlayIntegrity.prepareStandardIntegrityTokenProvider();
+      await prepareSITProvider();
     } catch (e) {
       console.error('Erro ao preparar o provider de integridade padrão:', e);
     }

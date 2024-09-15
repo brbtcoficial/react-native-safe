@@ -23,7 +23,7 @@ const DeviceCheck: {
 const PlayIntegrity: {
   isPlayIntegrityAvailable: () => Promise<boolean>;
   requestIntegrityToken: (nonce: string) => Promise<string>;
-  prepareStandardIntegrityTokenProvider: () => Promise<void>;
+  prepareStandardIntegrityTokenProvider: (cloudProjectNumber?:string) => Promise<void>;
   isStandardIntegrityTokenProviderPrepared: () => Promise<boolean>;
   requestStandardIntegrityToken: (hash: string) => Promise<string>;
 } = NativeModules.PlayIntegrity
