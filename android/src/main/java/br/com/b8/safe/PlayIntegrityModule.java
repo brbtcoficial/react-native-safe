@@ -1,14 +1,14 @@
 package br.com.b8.safe;
 
-import android.content.res.AssetManager;
 import androidx.annotation.NonNull;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
+import com.google.firebase.FirebaseApp;
+
 import com.facebook.react.bridge.Promise;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,6 +19,7 @@ import com.google.android.play.core.integrity.IntegrityServiceException;
 import com.google.android.play.core.integrity.IntegrityTokenRequest;
 import com.google.android.play.core.integrity.IntegrityTokenResponse;
 import com.google.android.play.core.integrity.StandardIntegrityManager;
+import com.google.firebase.FirebaseOptions;
 
 public class PlayIntegrityModule extends ReactContextBaseJavaModule {
     private static final String UNEXPECTED_ERROR_CODE = "-255";
@@ -34,7 +35,7 @@ public class PlayIntegrityModule extends ReactContextBaseJavaModule {
         this.baseContext = getReactApplicationContext();
     }
 
-    @Override
+    @NonNull
     public String getName() {
         return "PlayIntegrity";
     }
@@ -47,7 +48,7 @@ public class PlayIntegrityModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void isPlayIntegrityAvailable(final Promise promise) {
-        boolean apiAvailable = GooglePlayServicesUtil.isGooglePlayServicesAvailable(baseContext) == ConnectionResult.SUCCESS;
+        boolean apiAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(baseContext) == ConnectionResult.SUCCESS;
         promise.resolve(apiAvailable);
     }
 
@@ -75,13 +76,15 @@ public class PlayIntegrityModule extends ReactContextBaseJavaModule {
             final Promise promise
     ) {
         try {
-
             StandardIntegrityManager standardIntegrityManager = IntegrityManagerFactory.createStandard(baseContext);
-
             StandardIntegrityManager.PrepareIntegrityTokenRequest.Builder request = StandardIntegrityManager.PrepareIntegrityTokenRequest.builder();
 
             if (cloudProjectNumber != null && !cloudProjectNumber.isEmpty()) {
                 request.setCloudProjectNumber(Long.parseLong(cloudProjectNumber));
+            }
+            else {
+                String projectNumber = FirebaseOptions.fromResource(this.baseContext).getGcmSenderId();
+                request.setCloudProjectNumber(Long.parseLong(projectNumber));
             }
 
             Task<StandardIntegrityManager.StandardIntegrityTokenProvider> response =
@@ -144,6 +147,10 @@ public class PlayIntegrityModule extends ReactContextBaseJavaModule {
 
             if (cloudProjectNumber != null && !cloudProjectNumber.isEmpty()) {
                 request.setCloudProjectNumber(Long.parseLong(cloudProjectNumber));
+            }
+            else {
+                String projectNumber = FirebaseOptions.fromResource(this.baseContext).getGcmSenderId();
+                request.setCloudProjectNumber(Long.parseLong(projectNumber));
             }
 
             Task<IntegrityTokenResponse> integrityTokenResponse =
