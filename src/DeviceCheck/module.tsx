@@ -22,8 +22,13 @@ const DeviceCheck: {
 
 const PlayIntegrity: {
   isPlayIntegrityAvailable: () => Promise<boolean>;
-  requestIntegrityToken: (nonce: string, cloudProjectNumber?:string | null) => Promise<string>;
-  prepareStandardIntegrityTokenProvider: (cloudProjectNumber?:string) => Promise<void>;
+  requestIntegrityToken: (
+    nonce: string,
+    cloudProjectNumber?: string | null
+  ) => Promise<string>;
+  prepareStandardIntegrityTokenProvider: (
+    cloudProjectNumber?: string
+  ) => Promise<void>;
   isStandardIntegrityTokenProviderPrepared: () => Promise<boolean>;
   requestStandardIntegrityToken: (hash: string) => Promise<string>;
 } = NativeModules.PlayIntegrity
@@ -50,23 +55,29 @@ function generateRandomString(length: number) {
 
 export type TokenType = 'standard' | 'classic';
 
-export const getToken = async (payload?: object, type?:TokenType) => {
+export const getToken = async (payload?: object, type?: TokenType) => {
   try {
-    if(!type) type = 'standard';
+    if (!type) type = 'standard';
     if (Platform.OS === 'android') {
       const isAvailable = await PlayIntegrity.isPlayIntegrityAvailable();
       if (isAvailable) {
         if (type === 'classic') {
           const nonce = await sha256(JSON.stringify(payload ?? {}));
           const base64Nonce = new Buffer(nonce).toString('base64');
-          return [await PlayIntegrity.requestIntegrityToken(base64Nonce, null), nonce].join('|');
+          return [
+            await PlayIntegrity.requestIntegrityToken(base64Nonce, null),
+            nonce,
+          ].join('|');
         } else if (type === 'standard') {
           try {
             const isPrepared =
               await PlayIntegrity.isStandardIntegrityTokenProviderPrepared();
             if (isPrepared) {
               const hash = generateRandomString(64);
-              return [await PlayIntegrity.requestStandardIntegrityToken(hash), hash].join('|');
+              return [
+                await PlayIntegrity.requestStandardIntegrityToken(hash),
+                hash,
+              ].join('|');
             }
           } catch (e) {
             console.error('Erro ao obter o token de integridade padrão:', e);
