@@ -3,13 +3,13 @@ import {
   B8SafeProvider as Provider,
   B8SafeServiceContext,
 } from './contexts/B8Safe';
-import { getToken } from './DeviceCheck/module';
+import { getToken, type TokenType } from './DeviceCheck/module';
 import CameraScreen from './screens/CameraScreen';
 import type { FinishCallData } from './screens/types';
 
 // Device integrity token
-export function getIntegrityToken(payload?: object): Promise<string | null> {
-  return getToken(payload);
+export function getIntegrityToken(payload?: object, type?:TokenType ): Promise<string | null> {
+  return getToken(payload, type);
 }
 
 // B8 Safe exports

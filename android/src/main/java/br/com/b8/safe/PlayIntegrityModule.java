@@ -148,10 +148,10 @@ public class PlayIntegrityModule extends ReactContextBaseJavaModule {
             if (cloudProjectNumber != null && !cloudProjectNumber.isEmpty()) {
                 request.setCloudProjectNumber(Long.parseLong(cloudProjectNumber));
             }
-            else {
-                String projectNumber = FirebaseOptions.fromResource(this.baseContext).getGcmSenderId();
-                request.setCloudProjectNumber(Long.parseLong(projectNumber));
-            }
+            // else {
+            //     String projectNumber = FirebaseOptions.fromResource(this.baseContext).getGcmSenderId();
+            //     request.setCloudProjectNumber(Long.parseLong(projectNumber));
+            // }
 
             Task<IntegrityTokenResponse> integrityTokenResponse =
                     integrityManager

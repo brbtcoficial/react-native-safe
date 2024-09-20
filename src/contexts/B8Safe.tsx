@@ -45,15 +45,16 @@ export interface Configuration {
   hashChecker: string;
 }
 
-
 /**
  * Prepare Standard Integrity Token Provider
  * @method prepareStandardIntegrityTokenProvider
  * @param  {Number} cloudProjectNumber Cloud project number (optional)
  * @return {Promise}
  */
-async function prepareSITProvider(cloudProjectNumber?:string): Promise<void> {
-  return await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(cloudProjectNumber);
+async function prepareSITProvider(cloudProjectNumber?: string): Promise<void> {
+  return await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
+    cloudProjectNumber
+  );
 }
 
 const DEFAULT_VALUE: Context = {
