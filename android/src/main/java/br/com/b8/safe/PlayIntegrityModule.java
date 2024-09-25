@@ -138,7 +138,6 @@ public class PlayIntegrityModule extends ReactContextBaseJavaModule {
             final Promise promise) {
 
         try {
-
             IntegrityManager integrityManager =
                     IntegrityManagerFactory.create(baseContext);
 
