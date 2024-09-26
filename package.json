@@ -1,6 +1,6 @@
 {
   "name": "@b8safe/react-native-safe",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Package for native integration of Liveness service by B8Safe",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -94,20 +94,18 @@
     "@types/react": "18.2.2"
   },
   "dependencies": {
-    "@shopify/react-native-skia": "^0.1.241",
-    "fs": "^0.0.1-security",
-    "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-native": "^0.71.5",
-    "react-native-firebase": "^5.6.0",
-    "react-native-fs": "^2.20.0",
-    "react-native-permissions": "^3.6.1",
-    "react-native-reanimated": "^3.8.1",
-    "react-native-sha256": "^1.4.10",
-    "react-native-svg": "^12.5.1",
-    "react-native-vision-camera": "^3.9.2",
-    "react-native-webrtc": "^118.0.7",
-    "react-native-worklets-core": "^0.2.4"
+    "@shopify/react-native-skia": "0.1.241",
+    "react": "18.2.0",
+    "react-native": "0.71.5",
+    "react-native-firebase": "5.6.0",
+    "react-native-fs": "2.20.0",
+    "react-native-permissions": "3.6.1",
+    "react-native-reanimated": "3.8.1",
+    "react-native-sha256": "1.4.10",
+    "react-native-svg": "12.5.1",
+    "react-native-vision-camera": "3.9.2",
+    "react-native-webrtc": "118.0.7",
+    "react-native-worklets-core": "0.2.4"
   },
   "packageManager": "npm@9.8.1",
   "jest": {
