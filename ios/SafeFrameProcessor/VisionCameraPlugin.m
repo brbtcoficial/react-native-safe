@@ -8,8 +8,8 @@
 #import <WebRTC/RTCMediaConstraints.h>
 #import <WebRTC/RTCConfiguration.h>
 #import <WebRTC/RTCIceServer.h>
-#import <WebRTCModule.h>
-#import <WebRTCModule+RTCPeerConnection.h>
+#import <react_native_webrtc/WebRTCModule.h>
+#import <react_native_webrtc/WebRTCModule+RTCPeerConnection.h>
 
 
 @interface WebRTCPluginPlugin : FrameProcessorPlugin
