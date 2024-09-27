@@ -235,7 +235,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
   const currentRequestPhoto = useWorkletSharedValue<string | false>(false);
   const lastFrameSent = useWorkletSharedValue<string | false>(false);
 
-  const sendImageToServer = Worklets.createRunInJsFn((base64Img: string) => {
+  const sendImageToServer = Worklets.createRunOnJS((base64Img: string) => {
     if (currentRequestPhoto.value === lastFrameSent.value) return;
     // console.log('sendImageToServer:', base64Img.slice(0, 32), datachannel?.current?.readyState);
 
