@@ -2,7 +2,6 @@
 #import <VisionCamera/FrameProcessorPluginRegistry.h>
 #import <VisionCamera/Frame.h>
 
-
 @interface B8SafeFrameProcessorPlugin : FrameProcessorPlugin
 @end
 

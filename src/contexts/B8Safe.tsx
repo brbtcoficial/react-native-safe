@@ -5,7 +5,7 @@ import React, {
   type MutableRefObject,
   useEffect,
 } from 'react';
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import {
   MediaStream,
   RTCPeerConnection,
@@ -52,9 +52,11 @@ export interface Configuration {
  * @return {Promise}
  */
 async function prepareSITProvider(cloudProjectNumber?: string): Promise<void> {
-  return await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
-    cloudProjectNumber
-  );
+  if(Platform.OS === 'android'){
+    return await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
+      cloudProjectNumber
+    );
+  }
 }
 
 const DEFAULT_VALUE: Context = {
