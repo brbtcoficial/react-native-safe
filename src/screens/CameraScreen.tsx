@@ -60,7 +60,7 @@ export type CameraScreenProps = {
   onMessage?: (data: { message: string }) => void;
 };
 
-const plugin = VisionCameraProxy.initFrameProcessorPlugin('webrtcPlugin');
+const plugin = VisionCameraProxy.initFrameProcessorPlugin('b8SafeProcessor');
 const { width, height } = Dimensions.get('screen');
 
 const CameraScreen: React.FC<CameraScreenProps> = ({
