@@ -52,7 +52,7 @@ export interface Configuration {
  * @return {Promise}
  */
 async function prepareSITProvider(cloudProjectNumber?: string): Promise<void> {
-  if(Platform.OS === 'android'){
+  if (Platform.OS === 'android') {
     return await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
       cloudProjectNumber
     );
