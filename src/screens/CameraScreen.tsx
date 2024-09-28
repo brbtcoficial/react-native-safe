@@ -32,8 +32,8 @@ import {
   useCameraDevice,
   useFrameProcessor,
   runAtTargetFps,
-  VisionCameraProxy,
   type DeviceFilter,
+  VisionCameraProxy,
 } from 'react-native-vision-camera';
 import PopIcon from '../images/icons/PopIcon';
 import type RTCRtpEncodingParameters from 'react-native-webrtc/lib/typescript/RTCRtpEncodingParameters';
@@ -60,7 +60,7 @@ export type CameraScreenProps = {
   onMessage?: (data: { message: string }) => void;
 };
 
-const plugin = VisionCameraProxy.initFrameProcessorPlugin('b8SafeProcessor');
+const plugin = VisionCameraProxy.initFrameProcessorPlugin('b8SafeProcessor', {});
 const { width, height } = Dimensions.get('screen');
 
 const CameraScreen: React.FC<CameraScreenProps> = ({
@@ -289,7 +289,6 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
           frameProcessor={frameProcessor}
           zoom={isMultiCamera === true ? 2 : 0}
           isActive={true}
-          orientation={'landscape-right'}
           focusable={true}
           device={device}
         />
