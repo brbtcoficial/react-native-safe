@@ -114,7 +114,7 @@ const FacialSreen = (props: FacialScreenProps) => {
   };
 
   const finishCall = (data: FinishCallData) => {
-    pc?.current?.getSenders().forEach((sender) => {
+    pc?.getSenders().forEach((sender) => {
       sender.replaceTrack(null);
     });
 

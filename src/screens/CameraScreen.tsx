@@ -148,7 +148,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
   };
 
   const finishCall = async (data: FinishCallData) => {
-    pc?.current?.getSenders().forEach((sender) => {
+    pc?.getSenders().forEach((sender) => {
       sender.replaceTrack(null);
     });
 
@@ -242,7 +242,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
     if (currentRequestPhoto.value === lastFrameSent.value) return;
     // console.log('sendImageToServer:', base64Img.slice(0, 32), datachannel?.current?.readyState);
 
-    if (datachannel?.current?.readyState === 'open') {
+    if (datachannel?.readyState === 'open') {
       lastFrameSent.value = currentRequestPhoto.value;
       // const b64Len = base64Img.length;
       const parts = breakString(base64Img);
@@ -251,11 +251,11 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
         const str = `${frameId}|${index}|${item}`;
         // if(index == 0) console.log(`${frameId}|${index}|${item}`);
         //console.log(str.substring(0, 30));
-        datachannel?.current?.send(str);
+        datachannel?.send(str);
       });
       const str = `${frameId}|-1|${parts.length}`;
       // console.log(str);
-      datachannel?.current?.send(str);
+      datachannel?.send(str);
     }
   });
 
