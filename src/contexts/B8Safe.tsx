@@ -10,6 +10,7 @@ export interface FacialRecognitionChannelData {
 export interface Configuration {
   children: React.ReactNode;
   hashChecker: string;
+  onReady?: () => void;
 }
 
 export const B8SafeServiceContext = createContext<RTCConnectionInterface>(
@@ -19,6 +20,7 @@ export const B8SafeServiceContext = createContext<RTCConnectionInterface>(
 export const B8SafeProvider: React.FC<Configuration> = ({
   children,
   hashChecker,
+  onReady,
 }) => {
   // const [connected, setConnected] = useState(false);
   // const [localStream, setlocalStream] = useState<MediaStream>();
@@ -28,8 +30,13 @@ export const B8SafeProvider: React.FC<Configuration> = ({
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(null);
+      NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
+        null
+      ).then(() => {
+        if (onReady) onReady();
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
