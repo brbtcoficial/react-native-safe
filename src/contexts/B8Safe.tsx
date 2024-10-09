@@ -28,14 +28,18 @@ export const B8SafeProvider: React.FC<Configuration> = ({
     new RTCConnectionInterface({ hashChecker })
   );
 
-  useEffect(() => {
+  const servicesInitiator = async () => {
     if (Platform.OS === 'android') {
-      NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
+      await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
         null
-      ).then(() => {
-        if (onReady) onReady();
-      });
+      );
     }
+
+    if (onReady) onReady();
+  };
+
+  useEffect(() => {
+    servicesInitiator();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
