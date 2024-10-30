@@ -4,8 +4,8 @@ import {
   B8SafeServiceContext,
 } from './contexts/B8Safe';
 import { getToken, type TokenType } from './DeviceCheck/module';
-// import CameraScreen from './screens/CameraScreen';
-// import type { FinishCallData } from './screens/types';
+import CameraScreen from './screens/CameraScreen';
+import type { FinishCallData } from './screens/types';
 
 // Device integrity token
 export function getIntegrityToken(
@@ -22,7 +22,7 @@ export const useB8SafeService = () => {
 };
 
 // Default components
-// export const CameraOCR = CameraScreen;
+export const CameraOCR = CameraScreen;
 
 // Types
-// export type FinishCallCallback = FinishCallData;
+export type FinishCallCallback = FinishCallData;

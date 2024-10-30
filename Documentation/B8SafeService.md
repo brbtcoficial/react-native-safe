@@ -7,12 +7,18 @@ Você pode implementar diretamente a lógica de conexão diretamente em seu layo
 Você precisará adicionar o `Provider` na raíz do seu projeto.
 
 ```js
-import React from 'react';
+import React, { useCallback} from 'react';
 import { B8SafeProvider } from 'react-native-b8safe';
 
 const App = () => {
+  const b8SafeReadyCallback = useCallback(() => {
+    // device checker inicializado
+  }, []);
+
   return (
-    <B8SafeProvider hashChecker="kvnDZt0331uPVxmW">
+    <B8SafeProvider 
+      hashChecker="kvnDZt0331uPVxmW"
+      onReady={b8SafeReadyCallback}>
       {/* Aqui dentro vão todos os componentes do seu app e/ou sistema de navegação */}
     </B8SafeProvider>
   );
@@ -85,9 +91,9 @@ const CameraScreen = () => {
 }
 ```
 
-| property             |               type               | required |                                           description                                           |
+| Propriedade             |               Tipo               | Obrigatório |                                           Descrição                                           |
 | :------------------- | :------------------------------: | :------: | :---------------------------------------------------------------------------------------------: |
-| chlidren             |            ReactNode             |          | Caso queira customizer o HUD da câmera, você poderá renderizar seu componente react como filho. |
+| children             |            ReactNode             |          | Caso queira customizar o HUD da câmera, você poderá renderizar seu componente React como filho. |
 | hash                 |              string              |    \*    |                           Hash da validação, obtido na API da B8Safe.                           |
 | title                |              string              |          |                                   Título da página da câmera.                                   |
 | titleStyle           |            TextStyle             |          |                          Objeto contendo o estilo do texto do título.                           |

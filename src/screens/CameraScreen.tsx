@@ -32,7 +32,6 @@ import {
   useCameraDevice,
   useFrameProcessor,
   runAtTargetFps,
-  type DeviceFilter,
   VisionCameraProxy,
 } from 'react-native-vision-camera';
 import PopIcon from '../images/icons/PopIcon';
@@ -52,9 +51,11 @@ export type CameraScreenProps = {
   goBack?: () => void;
   hashChecker: string;
   titleStyle?: TextStyle;
+  type?: 'front' | 'back';
   children?: React.ReactNode;
   messageTextStyle?: TextStyle;
   showConnectionStatus?: boolean;
+  onFinishCall?: (data: FinishCallData) => void;
   onError?: (data: FinishCallData) => void;
   onSuccess?: (data: FinishCallData) => void;
   onMessage?: (data: { message: string }) => void;
@@ -68,12 +69,14 @@ const { width, height } = Dimensions.get('screen');
 
 const CameraScreen: React.FC<CameraScreenProps> = ({
   hash,
+  type,
   title,
   goBack,
   onError,
   children,
   onMessage,
   onSuccess,
+  onFinishCall,
   titleStyle = { fontSize: 15, color: '#FFF' },
   showConnectionStatus = true,
   messageTextStyle = { textAlign: 'center', fontSize: 19, color: '#FFF' },
@@ -90,15 +93,16 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
     removeDataChannelFunction,
     changeStreamResolution,
   } = useB8SafeService();
-
-  let isMultiCamera = false;
-  const { hasPermission, requestPermission } = useCameraPermission();
-  const cameraRef = useRef<Camera>(null);
-
   const layout = useRef({ width: 0, height: 0, x: 0, y: 0 });
   const picture = useSharedValue<SkPicture>(createPicture(() => {}));
+  const { hasPermission, requestPermission } = useCameraPermission();
+  let isMultiCamera = false;
 
-  const [message, setMessage] = useState<string>(``);
+  const cameraRef = useRef<Camera>(null);
+
+  const [message, setMessage] = useState<string>(
+    `Posicione ${type === 'front' ? 'a frente' : 'o verso'} do documento na moldura acima`
+  );
 
   const renderHud = (canvas: SkCanvas) => {
     const _width = layout.current?.width ?? 0;
@@ -143,7 +147,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
   const checkPermission = async () => {
     if (!hasPermission) requestPermission();
     setTimeout(() => {
-      //   setCameraReady(width);
+      // setCameraReady(width);
     }, 500);
   };
 
@@ -152,6 +156,8 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
       sender.replaceTrack(null);
     });
 
+    if (onFinishCall) onFinishCall(data);
+
     if (data?.success) {
       onSuccess && onSuccess(data);
     } else {
@@ -159,6 +165,20 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
       onError && onError(data);
     }
   };
+
+  const upgradeResolution = (data: RTCRtpEncodingParameters) => {
+    // console.log('upgradeResolution', data);
+    changeStreamResolution(data);
+  };
+
+  const _onMessage = (data: { message: string }) => {
+    if (!children) setMessage(data.message);
+    if (onMessage) onMessage(data);
+  };
+
+  const resolutionMultiplier = useWorkletSharedValue(0.1); //Usar 0.1 como default
+  const currentRequestPhoto = useWorkletSharedValue<string | false>(false);
+  const lastFrameSent = useWorkletSharedValue<string | false>(false);
 
   const requestStillPhoto = (data: RequestStillPhoto) => {
     currentRequestPhoto.value = data.requestId;
@@ -170,11 +190,6 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
       // console.log('requestStillPhoto setting default resolutionMultiplier as 0.1');
       resolutionMultiplier.value = 0.1;
     }
-  };
-
-  const upgradeResolution = (data: RTCRtpEncodingParameters) => {
-    // console.log('upgradeResolution', data);
-    changeStreamResolution(data);
   };
 
   useEffect(() => {
@@ -194,6 +209,9 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const videoHeight = (width * 16) / 9;
+  const verticalSpace = (height - videoHeight) / 2;
+
   const breakString = (str: string, size?: number) => {
     size = size ?? 60000;
     let breakStr = [];
@@ -205,38 +223,6 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
 
     return breakStr;
   };
-
-  const _onMessage = (data: { message: string }) => {
-    if (!children) setMessage(data.message);
-    if (onMessage) onMessage(data);
-  };
-
-  const videoHeight = (width * 16) / 9;
-  const verticalSpace = (height - videoHeight) / 2;
-
-  let device_options: DeviceFilter = {};
-  const cameraDevices = Camera.getAvailableCameraDevices();
-  if (cameraDevices && cameraDevices.length > 0) {
-    const firstCameraDevice = cameraDevices[0]; // Você pode escolher qualquer câmera da lista, porem o ideal é a da posição [0] pois ela é a camera principal do dispositivo
-
-    if (firstCameraDevice?.isMultiCam) {
-      isMultiCamera = true;
-      device_options = {
-        physicalDevices: [
-          'ultra-wide-angle-camera',
-          'wide-angle-camera',
-          'telephoto-camera',
-        ],
-      };
-    }
-  } else {
-    console.log('Nenhuma câmera disponível.');
-  }
-
-  const device = useCameraDevice('back', device_options);
-  const resolutionMultiplier = useWorkletSharedValue(0.1); //Usar 0.1 como default
-  const currentRequestPhoto = useWorkletSharedValue<string | false>(false);
-  const lastFrameSent = useWorkletSharedValue<string | false>(false);
 
   const sendImageToServer = Worklets.createRunOnJS((base64Img: string) => {
     if (currentRequestPhoto.value === lastFrameSent.value) return;
@@ -258,6 +244,29 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
       datachannel?.send(str);
     }
   });
+
+  let device;
+
+  const cameraDevices = Camera.getAvailableCameraDevices();
+  const devices = {
+    multicam: useCameraDevice('back', {
+      physicalDevices: [
+        'ultra-wide-angle-camera',
+        'wide-angle-camera',
+        'telephoto-camera',
+      ],
+    }),
+    monocam: useCameraDevice('back'),
+  };
+
+  // console.log(cameraDevices)
+  if (cameraDevices && cameraDevices.length > 0) {
+    const firstCameraDevice = cameraDevices[0]; // Você pode escolher qualquer câmera da lista, porem o ideal é a da posição [0] pois ela é a camera principal do dispositivo
+    device = devices[isMultiCamera ? 'multicam' : 'monocam'];
+    isMultiCamera = firstCameraDevice.isMultiCam ? true : false;
+  } else {
+    console.log('Nenhuma câmera disponível.');
+  }
 
   const frameProcessor = useFrameProcessor(
     (frame) => {
