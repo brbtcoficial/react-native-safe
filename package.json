@@ -1,6 +1,6 @@
 {
   "name": "@b8safe/react-native-safe",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Package for native integration of Liveness service by B8Safe",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
