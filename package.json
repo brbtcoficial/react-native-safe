@@ -1,6 +1,6 @@
 {
   "name": "@b8safe/react-native-safe",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "description": "Package for native integration of Liveness service by B8Safe",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -97,9 +97,7 @@
   "dependencies": {
     "react-native-sha256": "^1.4.10",
     "react-native-svg": "^12.5.1",
-    "react-native-vision-camera": "^3.9.2"
-  },
-  "peerDependencies": {
+    "react-native-vision-camera": "^3.9.2",
     "@shopify/react-native-skia": "^0.1.241",
     "react-native-permissions": "^3.6.1",
     "react-native-reanimated": "^3.8.1",
