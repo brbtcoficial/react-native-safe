@@ -1,7 +1,7 @@
 {
   "name": "@b8safe/react-native-safe",
   "version": "0.2.4",
-  "description": "Package for native integration of Liveness service by B8Safe",
+  "description": "Package for native integration of B8Safe SDK",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -25,7 +25,11 @@
     "ios",
     "cpp",
     "*.podspec",
-    "!ios/build",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
     "!android/build",
     "!android/gradle",
     "!android/gradlew",
@@ -51,7 +55,10 @@
     "facial",
     "react-native",
     "ios",
-    "android"
+    "android",
+    "kyc",
+    "compliance",
+    "safe"
   ],
   "repository": {
     "type": "git",
@@ -94,9 +101,14 @@
   "resolutions": {
     "@types/react": "18.2.2"
   },
-  "dependencies": {
-    "@react-native-firebase/app": "^21.3.0",
-    "react-native-sha256": "^1.4.10"
+  "peerDependencies": {
+    "@shopify/react-native-skia": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*",
+    "react-native-worklets-core": "*",
+    "@react-native-firebase/app": "*",
+    "react-native-sha256": "*"
   },
   "jest": {
     "preset": "react-native",
@@ -122,7 +134,31 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "preset": "angular"
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "perf",
+              "section": "💨 Performance Improvements"
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Bug Fixes"
+            },
+            {
+              "type": "chore(deps)",
+              "section": "🛠️ Dependency Upgrades"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            }
+          ]
+        }
       }
     }
   },

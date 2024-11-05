@@ -1,29 +1,37 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "paths": {
-      "react-native-b8safe": ["./src/index"]
-    },
+    "allowJs": false,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-native",
-    "lib": ["es6", "ES2023"],
+    "lib": ["esnext"],
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "noEmit": false,
-    "resolvePackageJsonExports": false,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noStrictGenericChecks": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
+    "outDir": "lib",
+    "declaration": true
   },
+  "include": [
+    "src",
+    "lib",
+    "babel.config.js",
+  ],
   "exclude": [
     "node_modules",
-    "babel.config.js",
     "metro.config.js",
-    "jest.config.js"
+    "jest.config.js",
+    "Documentation",
   ]
 }
