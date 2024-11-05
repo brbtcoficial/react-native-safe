@@ -95,6 +95,7 @@
     "@types/react": "18.2.2"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^21.3.0",
     "react-native-sha256": "^1.4.10"
   },
   "jest": {
