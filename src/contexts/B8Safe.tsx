@@ -1,6 +1,5 @@
-import React, { createContext, useRef, useEffect } from 'react';
+import React, { createContext, useEffect } from 'react';
 import { NativeModules, Platform } from 'react-native';
-import { RTCConnectionInterface } from './functions';
 
 export interface FacialRecognitionChannelData {
   function: string;
@@ -9,24 +8,18 @@ export interface FacialRecognitionChannelData {
 
 export interface Configuration {
   children: React.ReactNode;
-  hashChecker: string;
+  hashChecker?: string;
   onReady?: () => void;
 }
 
-export const B8SafeServiceContext = createContext<RTCConnectionInterface>(
-  new RTCConnectionInterface({ hashChecker: '' })
-);
+export const B8SafeServiceContext = createContext(null);
 
 export const B8SafeProvider: React.FC<Configuration> = ({
   children,
-  hashChecker,
   onReady,
 }) => {
   // const [connected, setConnected] = useState(false);
   // const [localStream, setlocalStream] = useState<MediaStream>();
-  const rtcInstance = useRef<RTCConnectionInterface>(
-    new RTCConnectionInterface({ hashChecker })
-  );
 
   const servicesInitiator = async () => {
     if (Platform.OS === 'android') {
@@ -44,7 +37,7 @@ export const B8SafeProvider: React.FC<Configuration> = ({
   }, []);
 
   return (
-    <B8SafeServiceContext.Provider value={rtcInstance.current}>
+    <B8SafeServiceContext.Provider value={null}>
       {children}
     </B8SafeServiceContext.Provider>
   );
