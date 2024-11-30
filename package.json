@@ -1,8 +1,8 @@
 {
   "name": "@b8safe/react-native-safe",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Package for native integration of B8Safe SDK",
-  "source": "./src/index.tsx",
+  "source": "src/index.js",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "exports": {
@@ -96,19 +96,22 @@
     "react-native-builder-bob": "^0.30.0",
     "release-it": "^15.0.0",
     "turbo": "^1.10.7",
-    "typescript": "5.0.4"
+    "typescript": "5.1.6"
   },
   "resolutions": {
     "@types/react": "18.2.2"
   },
   "peerDependencies": {
+    "@react-native-firebase/app": "*",
     "@shopify/react-native-skia": "*",
     "react": "*",
     "react-native": "*",
+    "react-native-svg": "*",
+    "react-native-sha256": "*",
     "react-native-reanimated": "*",
     "react-native-worklets-core": "*",
-    "@react-native-firebase/app": "*",
-    "react-native-sha256": "*"
+    "react-native-webrtc": "*",
+    "react-native-vision-camera": "*"
   },
   "jest": {
     "preset": "react-native",

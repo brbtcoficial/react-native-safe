@@ -1,10 +1,6 @@
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useEffect, useRef } from 'react';
 import { NativeModules, Platform } from 'react-native';
-
-export interface FacialRecognitionChannelData {
-  function: string;
-  data: any;
-}
+import { RTCConnectionInterface } from '../functions/RTCConnectionInterface';
 
 export interface Configuration {
   children: React.ReactNode;
@@ -12,23 +8,29 @@ export interface Configuration {
   onReady?: () => void;
 }
 
-export const B8SafeServiceContext = createContext(null);
+export const B8SafeServiceContext =
+  createContext<RTCConnectionInterface | null>(null);
 
 export const B8SafeProvider: React.FC<Configuration> = ({
   children,
+  hashChecker,
   onReady,
 }) => {
   // const [connected, setConnected] = useState(false);
   // const [localStream, setlocalStream] = useState<MediaStream>();
 
-  const servicesInitiator = async () => {
+  const rtcInstance = useRef<RTCConnectionInterface>(
+    hashChecker != null ? new RTCConnectionInterface({ hashChecker }) : null
+  );
+
+  const servicesInitiator = async (): Promise<void> => {
     if (Platform.OS === 'android') {
       await NativeModules.PlayIntegrity.prepareStandardIntegrityTokenProvider(
         null
       );
     }
 
-    if (onReady) onReady();
+    if (onReady != null) onReady();
   };
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export const B8SafeProvider: React.FC<Configuration> = ({
   }, []);
 
   return (
-    <B8SafeServiceContext.Provider value={null}>
+    <B8SafeServiceContext.Provider value={rtcInstance.current}>
       {children}
     </B8SafeServiceContext.Provider>
   );
