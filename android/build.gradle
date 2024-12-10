@@ -104,5 +104,6 @@ dependencies {
   implementation 'com.google.android.play:integrity:' + getExtOrDefault('playIntegrityVersion')
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.google.firebase:firebase-core:16.0.7'
+  implementation project(':react-native-vision-camera')
 }
 
