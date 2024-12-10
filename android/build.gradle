@@ -105,5 +105,6 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.google.firebase:firebase-core:16.0.7'
   implementation project(':react-native-vision-camera')
+  implementation project(':react-native-worklets-core')
 }
 
