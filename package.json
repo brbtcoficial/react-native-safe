@@ -1,6 +1,6 @@
 {
   "name": "@b8safe/react-native-safe",
-  "version": "0.3.01",
+  "version": "0.3.20",
   "description": "Package for native integration of B8Safe SDK",
   "react-native": "src/index",
   "source": "src/index.js",
