@@ -23,6 +23,62 @@ Verifique se as dependencias abaixo estão corretamente instaladas e configurada
 
 Dica: Verifique o passo a passo para a instalação de cada dependência, de acordo com as versões apontadas no arquivo [package.json](https://github.com/brbtcoficial/react-native-b8safe/blob/master/package.json).
 
+## Android configuration
+### 1 - Ativando o processador de frames
+Você precisará adicionar a biblioteca ao arquivo `android/app/build.gradle`:
+```java
+android {
+  // ...
+
+  namespace "my.application.id"
+  defaultConfig {
+    versionCode 000
+    versionName '0.0.00'
+    // ...
+    multiDexEnabled true
+  }
+
+  // ...
+}
+
+dependencies {
+  // ...
+  implementation project(':@b8safe_react-native-safe')    // <-- add this
+  // ...
+}
+```
+
+Depois, no arquivo `android/app/src/main/java/my/application/id/MainApplication.java`, adicione:
+```java
+package my.application.id;
+
+// ...
+import br.com.b8.safe.B8SafeFrameProcessorPluginPackage;    // <-- add this
+// ...
+
+public class MainApplication extends MultiDexApplication implements ReactApplication {
+  // private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
+
+  private final ReactNativeHost mReactNativeHost = new DefaultReactNativeHost(this) {
+    // ...
+
+    @Override
+    protected List<ReactPackage> getPackages() {
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+
+      // ...
+      packages.add( new B8SafeFrameProcessorPluginPackage() );    // <-- add this
+      // ...
+      
+      return packages;
+    }
+
+    // ...
+  }
+}
+```
+
 ## Basic Usage
 
 Para começar, você precisará adicionar o Provider do serviço na raiz do seu projeto React, com sua aplicação inteira sendo elemento filho do `B8SafeProvider` 
