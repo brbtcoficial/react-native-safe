@@ -1,14 +1,10 @@
-package br.com.b8.safe;
+package br.com.b8.safe.b8safeframeprocessor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.mrousavy.camera.frameprocessor.Frame;
-import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
-import com.mrousavy.camera.frameprocessor.VisionCameraProxy;
-
-import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
+import com.mrousavy.camera.frameprocessors.Frame;
+import com.mrousavy.camera.frameprocessors.FrameProcessorPlugin;
+import com.mrousavy.camera.frameprocessors.VisionCameraProxy;
 import java.util.Map;
 
 import android.graphics.ImageFormat;
