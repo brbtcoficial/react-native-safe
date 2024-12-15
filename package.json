@@ -42,7 +42,7 @@
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "prepare": "bob build",
-    "release": "bob build && release-it",
+    "release": "bob build && release-it 1.0.13",
     "commit": "git-cz",
     "clean-js": "scripts/clean-js.sh"
   },
