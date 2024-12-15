@@ -263,7 +263,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({
       device = getCameraDevice(cameraDevices, 'back');
     }
   } else {
-    console.log('Nenhuma câmera disponível.');
+    console.warn('Nenhuma câmera disponível.');
   }
 
   const frameProcessor = useFrameProcessor(

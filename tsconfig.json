@@ -7,7 +7,10 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-native",
-    "lib": ["es6"],
+    "lib": [
+      "es6",
+      "ES2023"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -21,21 +24,26 @@
     "strict": true,
     "target": "esnext",
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "types": [
+      "node",
+      "react",
+      "react-native-webrtc"
+    ],
   },
   "include": [
     "src/**/*",
     "src/index.d.ts",
-    "lib",
     "babel.config.js",
     "react-native.config.js"
   ],
   "exclude": [
-    "dist",
+    "lib",
     "node_modules",
     "metro.config.js",
     "jest.config.js",
     ".eslintrc.js",
     "Documentation",
+    "plugin"
   ]
 }

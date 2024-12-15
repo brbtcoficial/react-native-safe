@@ -192,7 +192,7 @@ export class RTCConnectionInterface {
               rtcMessage: offer,
             }),
           }).then((res) => {
-            console.log('Teste de resultado: ', res);
+            console.info('Teste de resultado: ', res);
             // if (res && res.success && res.rtcMessage.type === 'answer') {
             //     pc.current?.setRemoteDescription(new RTCSessionDescription(res.rtcMessage))
             //         .then(() => console.log('pc.current?.signalingState', pc.current?.signalingState))
@@ -223,8 +223,8 @@ export class RTCConnectionInterface {
           params.encodings[0].maxBitrate = maxBitrateInBitsPerSecond;
         sender
           .setParameters(params)
-          .then(() => console.log('parameter defined'))
-          .catch((e) => console.log('error:', e));
+          .then(() => console.info('parameter defined'))
+          .catch((e) => console.error('error:', e));
       }
     });
   }
@@ -234,10 +234,10 @@ export class RTCConnectionInterface {
     if (this.datachannel == null)
       throw new Error('Datachannel not initialized');
     this.datachannel.addEventListener('open', () =>
-      console.log('Datachannel oppened')
+      console.info('Datachannel oppened')
     );
     this.datachannel.addEventListener('close', () =>
-      console.log('Datachannel closed')
+      console.info('Datachannel closed')
     );
     this.datachannel.addEventListener('message', (message) => {
       this.handleChannelData(JSON.parse(message.data.toString()));
@@ -292,7 +292,7 @@ export class RTCConnectionInterface {
 
             return this.negotiate(hash, videoEnabled);
           })
-          .catch((e) => console.log(e));
+          .catch((e) => console.error(e));
       });
     } else {
       this.negotiate(hash, false);
