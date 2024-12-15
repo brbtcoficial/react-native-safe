@@ -25,6 +25,8 @@
     "android",
     "ios",
     "cpp",
+    "plugin/build",
+    "app.plugin.js",
     "*.podspec",
     "!ios/build",
     "!android/build",
@@ -106,7 +108,6 @@
     "@types/react": "18.2.2"
   },
   "peerDependencies": {
-    "@react-native-firebase/app": "*",
     "@shopify/react-native-skia": "*",
     "react": "*",
     "react-native": "*",
