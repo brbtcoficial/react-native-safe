@@ -1,4 +1,4 @@
-import { createRunOncePlugin, type ConfigPlugin } from 'expo/config-plugins';
+import { createRunOncePlugin, type ConfigPlugin } from '@expo/config-plugins';
 import { withLocationEnabled } from './withLocationEnabled';
 import { withPermissions } from './withPermissions';
 import { withAuthentication } from './withAuthentication';
