@@ -103,7 +103,7 @@ dependencies {
   implementation 'com.google.android.gms:play-services-base:' + getExtOrDefault('playServicesBaseVersion')
   implementation 'com.google.android.play:integrity:' + getExtOrDefault('playIntegrityVersion')
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.google.firebase:firebase-core'
+  implementation 'com.google.firebase:firebase-core:16.0.7'
   api project(":react-native-vision-camera")
 }
 

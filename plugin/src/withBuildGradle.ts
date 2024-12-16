@@ -1,19 +1,20 @@
 import type { ConfigPlugin } from '@expo/config-plugins';
-import { withAppBuildGradle } from '@expo/config-plugins';
+import { withAppBuildGradle, withSettingsGradle } from '@expo/config-plugins';
 
 const withBuildGradle: ConfigPlugin = (_config) => {
-  return withAppBuildGradle(_config, (config) => {
+  _config = withSettingsGradle(_config, (config) => {
     if (
       !config.modResults.contents.includes(
         "include ':@b8safe_react-native-safe'"
       )
     ) {
       config.modResults.contents += `
-            include ':@b8safe_react-native-safe'
-            project(':@b8safe_react-native-safe').projectDir = new File(rootProject.projectDir, '../node_modules/@b8safe/react-native-safe/android')
-        `;
+include ':@b8safe_react-native-safe'
+project(':@b8safe_react-native-safe').projectDir = new File(rootProject.projectDir, '../node_modules/@b8safe/react-native-safe/android')`;
     }
-
+    return config;
+  });
+  _config = withAppBuildGradle(_config, (config) => {
     if (
       !config.modResults.contents.includes(
         "implementation project(':@b8safe_react-native-safe')"
@@ -28,6 +29,8 @@ const withBuildGradle: ConfigPlugin = (_config) => {
 
     return config;
   });
+
+  return _config;
 };
 
 export default withBuildGradle;

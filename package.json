@@ -7,6 +7,11 @@
   "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
+  "paths": {
+    "@b8safe/react-native-safe": [
+      "lib/commonjs/index"
+    ]
+  },
   "files": [
     "src",
     "lib",
@@ -29,7 +34,6 @@
   ],
   "scripts": {
     "typecheck": "tsc",
-    "prepack": "npm run prepare",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "build": "babel src/ -d lib/",
     "clean": "expo-module clean",
@@ -218,5 +222,8 @@
     "plugins": [
       "./app.plugin.js"
     ]
+  },
+  "dependencies": {
+    "expo": "^52.0.19"
   }
 }
