@@ -2,11 +2,11 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: "*.{js,ts,jsx,tsx}"
-      run: npx eslint {staged_files}
+      glob: '*.{ts,tsx}'
+      run: npx eslint {staged_files} --fix
     types:
-      glob: "*.{js,ts, jsx, tsx}"
-      run: npx tsc
+      glob: '*.{ts,tsx}'
+      run: npx tsc --noEmit
 commit-msg:
   parallel: true
   commands:

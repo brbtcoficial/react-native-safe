@@ -1,22 +1,25 @@
-import { NativeModules, Platform } from 'react-native';
+import { useContext } from 'react';
+import {
+  B8SafeProvider as Provider,
+  B8SafeServiceContext,
+} from './contexts/B8Safe';
+import { getToken } from './DeviceCheck/module';
+import CameraScreen from './screens/Camera';
 
-const LINKING_ERROR =
-  `The package 'react-native-b8safe' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+import { type RTCConnectionInterface } from './functions/RTCConnectionInterface';
 
-const B8safe = NativeModules.B8safe
-  ? NativeModules.B8safe
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-
-export function multiply(a: number, b: number): Promise<number> {
-  return B8safe.multiply(a, b);
+// Device integrity token
+export function getIntegrityToken(
+  payload?: object,
+  type?: TokenType
+): Promise<string | null> {
+  return getToken(payload, type);
 }
+
+// B8 Safe exports
+export const B8SafeProvider = Provider;
+export const useB8SafeService = (): RTCConnectionInterface | null => {
+  return useContext(B8SafeServiceContext);
+};
+
+export const Camera = CameraScreen;

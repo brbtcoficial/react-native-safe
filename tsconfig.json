@@ -1,29 +1,45 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "paths": {
-      "react-native-b8safe": ["./src/index"]
-    },
+    "allowJs": false,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react-jsx",
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "noEmit": true,
+    "jsx": "react-native",
+    "lib": [ "esnext" ],
+    "sourceMap": true,
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
     "noStrictGenericChecks": false,
-    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext",
-    "verbatimModuleSyntax": true
-  }
+    "target": "esnext",
+    "outDir": "lib",
+    "declaration": true,
+    "types": [
+      "node",
+      "react",
+      "react-native-webrtc"
+    ],
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "lib",
+    "node_modules",
+    "metro.config.js",
+    "jest.config.js",
+    ".eslintrc.js",
+    "Documentation",
+    "plugin"
+  ]
 }

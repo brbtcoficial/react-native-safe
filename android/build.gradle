@@ -1,3 +1,7 @@
+def safeExtGet(prop, fallback) {
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
 buildscript {
   // Buildscript is evaluated before everything else so we can't use getExtOrDefault
   def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["B8safe_kotlinVersion"]
@@ -49,11 +53,11 @@ def supportsNamespace() {
 
 android {
   if (supportsNamespace()) {
-    namespace "com.b8safe"
+    namespace "br.com.b8.safe"
 
     sourceSets {
       main {
-        manifest.srcFile "src/main/AndroidManifestNew.xml"
+        manifest.srcFile "src/main/AndroidManifest.xml"
       }
     }
   }
@@ -63,7 +67,6 @@ android {
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
-
   }
 
   buildTypes {
@@ -85,6 +88,9 @@ android {
 repositories {
   mavenCentral()
   google()
+  maven {
+    url 'https://maven.google.com'
+  }
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
@@ -94,6 +100,11 @@ dependencies {
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
+  implementation 'com.google.android.gms:play-services-base:' + getExtOrDefault('playServicesBaseVersion')
+  implementation 'com.google.android.play:integrity:' + getExtOrDefault('playIntegrityVersion')
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'com.google.firebase:firebase-core'
+  api project(":react-native-vision-camera")
+  implementation project(':expo-modules-core')
 }
 
