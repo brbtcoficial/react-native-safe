@@ -1,4 +1,8 @@
-import { createRunOncePlugin, type ConfigPlugin } from '@expo/config-plugins';
+import {
+  createRunOncePlugin,
+  withPlugins,
+  type ConfigPlugin,
+} from '@expo/config-plugins';
 import { withLocationEnabled } from './withLocationEnabled';
 import { withPermissions } from './withPermissions';
 import { withAuthentication } from './withAuthentication';
@@ -9,14 +13,11 @@ const pkg = { name: '@b8safe/react-native-safe', version: 'UNVERSIONED' };
 const withB8Safe: ConfigPlugin<PluginConfiguration> = (config, props = {}) => {
   const { enableLocation = false, hashChecker = '' } = props;
 
-  config = withPermissions(config, props);
-
   if (enableLocation) config = withLocationEnabled(config, props);
 
   if (hashChecker !== '') config = withAuthentication(config, hashChecker);
 
-  config = withBuildGradle(config);
-
+  withPlugins(config, [[withPermissions, props], withBuildGradle]);
   return config;
 };
 

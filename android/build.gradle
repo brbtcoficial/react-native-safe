@@ -105,6 +105,5 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.google.firebase:firebase-core'
   api project(":react-native-vision-camera")
-  implementation project(':expo-modules-core')
 }
 

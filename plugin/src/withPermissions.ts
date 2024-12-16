@@ -1,9 +1,5 @@
 import type { ConfigPlugin } from '@expo/config-plugins';
-import {
-  AndroidConfig,
-  withAndroidManifest,
-  withInfoPlist,
-} from '@expo/config-plugins';
+import { AndroidConfig, withPlugins } from '@expo/config-plugins';
 
 export const withPermissions: ConfigPlugin<PluginConfiguration> = (
   config,
@@ -13,27 +9,18 @@ export const withPermissions: ConfigPlugin<PluginConfiguration> = (
     cameraPermissionText = 'Allow $(PRODUCT_NAME) to access your camera',
   }
 ) => {
+  if (config.ios == null) config.ios = {};
+  if (config.ios.infoPlist == null) config.ios.infoPlist = {};
+
   const androidPermissions = ['android.permission.CAMERA'];
-  config = withInfoPlist(config, (_config) => {
-    _config.modResults.NSCameraUsageDescription = cameraPermissionText;
-    return _config;
-  });
+  config.ios.infoPlist.NSCameraUsageDescription = cameraPermissionText;
 
-  if (enableLocation) {
+  if (enableLocation === true) {
     androidPermissions.push('android.permission.ACCESS_FINE_LOCATION');
-    config = withInfoPlist(config, (_config) => {
-      _config.modResults.NSLocationAlwaysAndWhenInUseUsageDescription =
-        locationPermissionText;
-      return _config;
-    });
+    config.ios.infoPlist.NSLocationAlwaysAndWhenInUseUsageDescription =
+      locationPermissionText;
   }
-
-  config = withAndroidManifest(config, (_config) => {
-    androidPermissions.forEach((permission) => {
-      AndroidConfig.Permissions.addPermission(_config.modResults, permission);
-    });
-    return _config;
-  });
-
-  return config;
+  return withPlugins(config, [
+    [AndroidConfig.Permissions.withPermissions, androidPermissions],
+  ]);
 };
