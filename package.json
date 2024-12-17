@@ -95,12 +95,14 @@
     "react-native-builder-bob": "^0.30.0",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "expo": "^50.0.21"
   },
   "resolutions": {
     "@types/react": "18.2.2"
   },
   "peerDependencies": {
+    "expo": ">=47.0.0",
     "@shopify/react-native-skia": "*",
     "react": "*",
     "react-native": "*",
@@ -110,6 +112,11 @@
     "react-native-vision-camera": "*",
     "react-native-webrtc": "*",
     "react-native-worklets-core": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
   },
   "jest": {
     "preset": "react-native",
