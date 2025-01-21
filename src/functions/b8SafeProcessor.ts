@@ -1,14 +1,15 @@
-import type { Frame } from 'react-native-vision-camera';
-import { VisionCameraProxy } from 'react-native-vision-camera';
+import type { Frame } from "react-native-vision-camera";
+import { VisionCameraProxy } from "react-native-vision-camera";
 
 const plugin = VisionCameraProxy.initFrameProcessorPlugin(
-  'b8SafeProcessor',
-  {}
+    "b8SafeProcessor",
+    {},
 );
 
 export function b8SafeProcessor(frame: Frame): unknown {
-  'worklet';
-  if (plugin == null) throw new Error('Failed to load Frame Processor Plugin!');
+    "worklet";
+    if (plugin == null)
+        throw new Error("Failed to load Frame Processor Plugin!");
 
-  return plugin.call(frame);
+    return plugin.call(frame);
 }

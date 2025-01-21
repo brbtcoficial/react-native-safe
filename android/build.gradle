@@ -24,7 +24,7 @@ def reactNativeArchitectures() {
 }
 
 def isNewArchitectureEnabled() {
-  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+  return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
 
 apply plugin: "com.android.library"
@@ -57,6 +57,7 @@ android {
 
     sourceSets {
       main {
+        java.srcDirs += ['src/main/java']
         manifest.srcFile "src/main/AndroidManifest.xml"
       }
     }
@@ -67,6 +68,7 @@ android {
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
   }
 
   buildTypes {
@@ -103,7 +105,7 @@ dependencies {
   implementation 'com.google.android.gms:play-services-base:' + getExtOrDefault('playServicesBaseVersion')
   implementation 'com.google.android.play:integrity:' + getExtOrDefault('playIntegrityVersion')
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.google.firebase:firebase-core:16.0.7'
-  api project(":react-native-vision-camera")
+  implementation 'com.google.firebase:firebase-core:+'
+  implementation project(":react-native-vision-camera")
 }
 

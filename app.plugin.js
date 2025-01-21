@@ -1,1 +1,2 @@
-module.exports = require('./plugin/build/withB8Safe');
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+module.exports = require('./lib/commonjs/expo-plugin/withB8Safe');

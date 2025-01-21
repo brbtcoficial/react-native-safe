@@ -2,9 +2,11 @@ package br.com.b8.safe.b8safeframeprocessor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.mrousavy.camera.frameprocessor.Frame;
-import com.mrousavy.camera.frameprocessor.FrameProcessorPlugin;
-import com.mrousavy.camera.frameprocessor.VisionCameraProxy;
+
+import com.mrousavy.camera.core.FrameInvalidError;
+import com.mrousavy.camera.frameprocessors.Frame;
+import com.mrousavy.camera.frameprocessors.FrameProcessorPlugin;
+import com.mrousavy.camera.frameprocessors.VisionCameraProxy;
 import java.util.Map;
 
 import java.io.ByteArrayOutputStream;
@@ -24,13 +26,23 @@ public class B8SafeFrameProcessorPlugin extends FrameProcessorPlugin {
   @Nullable
   @Override
   public Object callback(@NonNull Frame frame, @Nullable Map<String, Object> arguments) {
+    Image image = null;
     try {
       // Parse and validate resolutionMultiplier
       float resolutionMultiplier = Float.parseFloat(arguments.get("resolutionMultiplier").toString());
       int scale = Math.round(resolutionMultiplier * 100);
 
       // Get image from frame
-      Image image = frame.getImage();
+      try {
+        image = frame.getImage();
+      } catch (FrameInvalidError e) {
+        Log.e("BRBTC_LOG", "Frame is invalid", e);
+        return null;
+      } catch (Exception e) {
+        Log.e("BRBTC_LOG", "Error processing frame", e);
+        return null;
+      }
+      
       if (image == null) {
         Log.e("BRBTC_LOG", "Failed to get image from frame");
         return null;
@@ -67,7 +79,7 @@ public class B8SafeFrameProcessorPlugin extends FrameProcessorPlugin {
 
       // Convert JPEG to Base64
       byte[] imageBytes = out.toByteArray();
-      String result = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+      String result = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
 
       // Log result
       Log.v("BRBTC_LOG", result);
